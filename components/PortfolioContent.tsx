@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
-import { experiences, hackathonPlaceholders, projectPlaceholders } from "@/data/portfolio";
+import { useState } from "react";
+import { experiences, hackathonEntries, projectEntries } from "@/data/portfolio";
 
 const aboutImages = [
   {
@@ -26,6 +29,8 @@ function SectionHeading({ number, label, id }: { number: string; label: string; 
 }
 
 export default function PortfolioContent() {
+  const [openExperience, setOpenExperience] = useState<string | null>(null);
+
   return (
     <div className="content-inner">
       <section className="about-section portfolio-section" id="about" aria-labelledby="about-title">
@@ -59,14 +64,42 @@ export default function PortfolioContent() {
         <p className="section-intro">A record of places, people, and problems that shaped the work.</p>
         <div className="experience-list">
           {experiences.map((experience, index) => (
-            <article className="experience-entry" key={experience.company}>
-              <span className="entry-index">0{index + 1}</span>
-              <div className="entry-main">
-                <h3>{experience.company}</h3>
-                <p>{experience.role}</p>
-                <span className="entry-tech">{experience.technologies}</span>
+            <article className={`experience-entry${openExperience === experience.company ? " is-open" : ""}`} key={experience.company}>
+              <button
+                aria-controls={`experience-details-${index}`}
+                aria-expanded={openExperience === experience.company}
+                className="experience-trigger"
+                onClick={() => setOpenExperience(openExperience === experience.company ? null : experience.company)}
+                type="button"
+              >
+                <span className="entry-index">0{index + 1}</span>
+                <span className="entry-main">
+                  <span className="entry-company" role="heading" aria-level={3}>{experience.company}</span>
+                  <span className="entry-role">{experience.role}</span>
+                  <span className="entry-tech">{experience.technologies}</span>
+                </span>
+                <span className="entry-date">{experience.date}</span>
+                <span className="experience-toggle" aria-hidden="true">{openExperience === experience.company ? "−" : "+"}</span>
+              </button>
+              <div
+                className="experience-details"
+                hidden={openExperience !== experience.company}
+                id={`experience-details-${index}`}
+              >
+                <div className="experience-detail-block">
+                  <span className="experience-detail-label">CONTRIBUTIONS</span>
+                  <ul>
+                    {experience.contributions.map((contribution) => <li key={contribution}>{contribution}</li>)}
+                  </ul>
+                </div>
+                <div className="experience-detail-block">
+                  <span className="experience-detail-label">IMPACT</span>
+                  <p>{experience.impact}</p>
+                </div>
+                <a className="experience-site-link" href={experience.website} rel="noreferrer" target="_blank">
+                  Organization website <span aria-hidden="true">↗</span>
+                </a>
               </div>
-              <span className="entry-date">{experience.date}</span>
             </article>
           ))}
         </div>
@@ -76,12 +109,13 @@ export default function PortfolioContent() {
         <SectionHeading id="hackathons-title" number="03" label="Hackathons" />
         <p className="section-intro">Selected builds and moments from collaborative sprints.</p>
         <div className="editorial-list">
-          {hackathonPlaceholders.map((entry, index) => (
-            <article className="editorial-entry" key={entry}>
+          {hackathonEntries.map((entry, index) => (
+            <article className="editorial-entry" key={entry.name}>
               <span className="entry-index">0{index + 1}</span>
               <div>
-                <h3>{entry}</h3>
-                <p>Event details and project highlights to be added.</p>
+                <h3>{entry.name}</h3>
+                <p>{entry.date} · {entry.description}</p>
+                <span className="entry-tech">{entry.technologies}</span>
               </div>
               <span className="entry-arrow" aria-hidden="true">↗</span>
             </article>
@@ -93,12 +127,13 @@ export default function PortfolioContent() {
         <SectionHeading id="projects-title" number="04" label="Projects" />
         <p className="section-intro">A selection of things made with care and curiosity.</p>
         <div className="editorial-list">
-          {projectPlaceholders.map((entry, index) => (
-            <article className="editorial-entry project-entry" key={entry}>
+          {projectEntries.map((entry, index) => (
+            <article className="editorial-entry project-entry" key={entry.name}>
               <span className="entry-index">0{index + 1}</span>
               <div>
-                <h3>{entry}</h3>
-                <p>Project overview, role, and technology details to be added.</p>
+                <h3>{entry.name}</h3>
+                <p>{entry.date} · {entry.description}</p>
+                <span className="entry-tech">{entry.technologies}</span>
               </div>
               <span className="entry-arrow" aria-hidden="true">↗</span>
             </article>

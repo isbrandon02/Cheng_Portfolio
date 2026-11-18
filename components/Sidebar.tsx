@@ -32,8 +32,8 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
 
       <div className="sidebar-bottom">
         <nav className="sidebar-socials" aria-label="Social links">
-          <a href="https://github.com/">GitHub</a>
-          <a href="https://www.linkedin.com/">LinkedIn</a>
+          <a href="https://github.com/isbrandon02" rel="noreferrer" target="_blank">GitHub</a>
+          <a href="https://linkedin.com/in/bcheng1102" rel="noreferrer" target="_blank">LinkedIn</a>
           <a href="#resume">Resume</a>
         </nav>
         <span className="sidebar-university">DUKE UNIVERSITY</span>
