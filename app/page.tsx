@@ -1,5 +1,5 @@
-import POSLayout from "@/components/POSLayout";
+import PortfolioLayout from "@/components/PortfolioLayout";
 
 export default function Home() {
-  return <POSLayout />;
+  return <PortfolioLayout />;
 }

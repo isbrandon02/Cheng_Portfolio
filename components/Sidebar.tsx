@@ -1,12 +1,43 @@
-const navigation = ["About Me", "Experience", "Hackathons", "Projects"];
+import { portfolioSections, type PortfolioSectionId } from "@/data/portfolio";
 
-export default function Sidebar() {
+type SidebarProps = {
+  activeSection: PortfolioSectionId;
+  onNavigate: (section: PortfolioSectionId) => void;
+};
+
+export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   return (
     <aside className="sidebar">
-      <div className="sidebar-name">BRANDON CHENG</div>
-      <nav aria-label="Portfolio sections" className="portfolio-nav">
-        {navigation.map((item) => <div className="nav-item" key={item}>{item}</div>)}
+      <a className="sidebar-brand" href="#about" onClick={() => onNavigate("about")}>
+        <span className="sidebar-name">Brandon Cheng.</span>
+        <span className="sidebar-role">SOFTWARE ENGINEER</span>
+      </a>
+
+      <div className="sidebar-rule" />
+
+      <nav aria-label="Main navigation" className="sidebar-nav">
+        {portfolioSections.map((section) => (
+          <a
+            aria-current={activeSection === section.id ? "location" : undefined}
+            className={`sidebar-link${activeSection === section.id ? " is-active" : ""}`}
+            href={`#${section.id}`}
+            key={section.id}
+            onClick={() => onNavigate(section.id)}
+          >
+            <span className="sidebar-link-indicator" aria-hidden="true" />
+            <span>{section.label}</span>
+          </a>
+        ))}
       </nav>
+
+      <div className="sidebar-bottom">
+        <nav className="sidebar-socials" aria-label="Social links">
+          <a href="https://github.com/">GitHub</a>
+          <a href="https://www.linkedin.com/">LinkedIn</a>
+          <a href="#resume">Resume</a>
+        </nav>
+        <span className="sidebar-university">DUKE UNIVERSITY</span>
+      </div>
     </aside>
   );
 }
