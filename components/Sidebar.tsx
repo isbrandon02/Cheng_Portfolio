@@ -9,8 +9,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   return (
     <aside className="sidebar">
       <a className="sidebar-brand" href="#about" onClick={() => onNavigate("about")}>
-        <span className="sidebar-name">Brandon Cheng.</span>
-        <span className="sidebar-role">SOFTWARE ENGINEER</span>
+        <span className="sidebar-name">Brandon Cheng</span>
       </a>
 
       <div className="sidebar-rule" />
@@ -25,6 +24,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
             onClick={() => onNavigate(section.id)}
           >
             <span className="sidebar-link-indicator" aria-hidden="true" />
+            <span className="sidebar-link-number">{section.number}</span>
             <span>{section.label}</span>
           </a>
         ))}

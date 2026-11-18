@@ -1,4 +1,20 @@
+import Image from "next/image";
 import { experiences, hackathonPlaceholders, projectPlaceholders } from "@/data/portfolio";
+
+const aboutImages = [
+  {
+    src: "/hike.jpg",
+    alt: "Brandon hiking through a forested mountain landscape",
+  },
+  {
+    src: "/mewtwo.jpg",
+    alt: "Brandon smiling at a Mewtwo exhibit",
+  },
+  {
+    src: "/Solo.JPG",
+    alt: "Portrait of Brandon outdoors at night",
+  },
+];
 
 function SectionHeading({ number, label, id }: { number: string; label: string; id: string }) {
   return (
@@ -14,12 +30,26 @@ export default function PortfolioContent() {
     <div className="content-inner">
       <section className="about-section portfolio-section" id="about" aria-labelledby="about-title">
         <div className="hero-labels">
-          <div className="hero-meta"><span>PORTFOLIO</span><span>DUKE UNIVERSITY</span></div>
+          <div className="hero-meta"><span>PORTFOLIO</span></div>
           <p className="section-number hero-number">01 / ABOUT</p>
         </div>
-        <h1 id="about-title">Hi,<br />I'm Brandon<br /></h1>
+        <h1 id="about-title">Hi,<br />I'm Brandon<span className="hero-signature-dot">.</span></h1>
+        <div className="about-images" role="group" aria-label="Photos of Brandon">
+          {aboutImages.map((image) => (
+            <figure className="about-image" key={image.src}>
+              <div className="about-image-frame">
+                <Image
+                  alt={image.alt}
+                  className="about-image-source"
+                  fill
+                  sizes="(max-width: 760px) 50vw, (max-width: 1100px) 30vw, 28vw"
+                  src={image.src}
+                />
+              </div>
+            </figure>
+          ))}
+        </div>
         <div className="hero-bottom">
-          <p className="hero-intro">Software Engineer</p>
           <p className="hero-prompt">SCROLL TO EXPLORE <span aria-hidden="true">↓</span></p>
         </div>
       </section>
